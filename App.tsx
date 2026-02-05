@@ -5,41 +5,52 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SwiperScreen from './src/screens/SwiperScreen';
+import SavedListingsScreen from './src/screens/SavedListingsScreen';
+
+// Define the Listing type for shared state
+interface Listing {
+  id: string;
+  imageUri: string;
+  rent: number;
+  size: number;
+  city: string;
+  companyName: string;
+}
+
+const Stack = createNativeStackNavigator();
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [savedListings, setSavedListings] = useState<Listing[]>([]);
+
+  // Function to add a listing to the saved list
+  const addSavedListing = (listing: Listing) => {
+    setSavedListings(prev => [...prev, listing]);
+  };
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Swiper">
+          {props => (
+            <SwiperScreen
+              {...props}
+              addSavedListing={addSavedListing}
+              savedListingsCount={savedListings.length}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen
+          name="SavedListings"
+          component={SavedListingsScreen}
+          initialParams={{ savedListings: savedListings }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

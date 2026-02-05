@@ -1,14 +1,23 @@
-
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ListingCard = ({ card }) => (
   <View style={styles.card}>
-    <Image source={{ uri: card.imageUri }} style={styles.image} />
-    <View style={styles.overlay}>
-      <Text style={styles.rent}>{`€${card.rent}`}</Text>
-      <Text style={styles.details}>{`${card.size} sqm - ${card.city}`}</Text>
-    </View>
+    <ImageBackground
+      source={{ uri: card.imageUri }}
+      style={styles.image}
+      imageStyle={{ borderRadius: 15 }}>
+      <LinearGradient
+        colors={['transparent', 'rgba(0,0,0,0.8)']}
+        style={styles.gradient}>
+        <View style={styles.overlay}>
+          <Text style={styles.rent}>{`€${card.rent}`}</Text>
+          <Text style={styles.details}>{`${card.size} sqm - ${card.city}`}</Text>
+          <Text style={styles.company}>{card.companyName}</Text>
+        </View>
+      </LinearGradient>
+    </ImageBackground>
   </View>
 );
 
@@ -17,34 +26,40 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#FFF',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
   },
   image: {
     width: '100%',
     height: '100%',
+    justifyContent: 'flex-end',
+  },
+  gradient: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
     borderRadius: 15,
   },
   overlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 15,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+    padding: 20,
   },
   rent: {
     color: '#FFF',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   details: {
     color: '#FFF',
+    fontSize: 20,
+    marginBottom: 5,
+  },
+  company: {
+    color: '#FFF',
     fontSize: 18,
+    fontStyle: 'italic',
   },
 });
 
