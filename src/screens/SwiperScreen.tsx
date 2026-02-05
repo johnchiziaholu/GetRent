@@ -15,11 +15,10 @@ interface Listing {
 
 // Define the props for the screen, including navigation and state logic
 interface SwiperScreenProps {
-  navigation: any;
   addSavedListing: (listing: Listing) => void;
 }
 
-const DUMMY_LISTINGS: Listing[] = [
+export const DUMMY_LISTINGS: Listing[] = [
   {
     id: '1',
     imageUri: 'https://via.placeholder.com/300x400?text=Listing+1',
@@ -55,7 +54,6 @@ const DUMMY_LISTINGS: Listing[] = [
 ];
 
 const SwiperScreen: React.FC<SwiperScreenProps> = ({
-  navigation,
   addSavedListing,
 }) => {
   const [listings, setListings] = useState<Listing[]>(DUMMY_LISTINGS);
@@ -63,7 +61,7 @@ const SwiperScreen: React.FC<SwiperScreenProps> = ({
   const onSwipedRight = (cardIndex: number) => {
     const swipedListing = listings[cardIndex];
     if (swipedListing) {
-      addSavedListing(swipedListing); // Use the function from props
+      addSavedListing(swipedListing);
     }
   };
 

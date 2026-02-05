@@ -31,7 +31,6 @@ interface SavedListingsScreenProps {
 
 const SavedListingsScreen: React.FC<SavedListingsScreenProps> = ({
   route,
-  navigation,
 }) => {
   const { savedListings } = route.params;
 
