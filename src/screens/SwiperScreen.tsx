@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import ListingCard from '../components/ListingCard';
 import Logo from '../components/Logo';
@@ -17,7 +17,6 @@ interface Listing {
 interface SwiperScreenProps {
   navigation: any;
   addSavedListing: (listing: Listing) => void;
-  savedListingsCount: number;
 }
 
 const DUMMY_LISTINGS: Listing[] = [
@@ -58,7 +57,6 @@ const DUMMY_LISTINGS: Listing[] = [
 const SwiperScreen: React.FC<SwiperScreenProps> = ({
   navigation,
   addSavedListing,
-  savedListingsCount,
 }) => {
   const [listings, setListings] = useState<Listing[]>(DUMMY_LISTINGS);
 
@@ -84,13 +82,6 @@ const SwiperScreen: React.FC<SwiperScreenProps> = ({
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Logo />
-        <TouchableOpacity
-          style={styles.savedButton}
-          onPress={() => navigation.navigate('SavedListings')}>
-          <Text style={styles.savedButtonText}>
-            Saved ({savedListingsCount})
-          </Text>
-        </TouchableOpacity>
       </View>
 
       {listings.length > 0 ? (
@@ -163,30 +154,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', // Center the logo
-    paddingHorizontal: 20,
+    justifyContent: 'center',
     paddingTop: 10,
-    position: 'relative', // Needed for absolute positioning of the button
     width: '100%',
   },
   swiperContainer: {
     flex: 1,
-    marginTop: 0, // Swiper now takes up space below the header
-  },
-  savedButton: {
-    position: 'absolute',
-    right: 20,
-    top: 15, // Align with the center of the logo
-    padding: 10,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-  },
-  savedButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    marginTop: 0,
   },
   noListingsContainer: {
     flex: 1,

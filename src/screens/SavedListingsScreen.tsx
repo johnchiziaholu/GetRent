@@ -4,7 +4,6 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import ListingCard from '../components/ListingCard';
@@ -39,11 +38,7 @@ const SavedListingsScreen: React.FC<SavedListingsScreenProps> = ({
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Text style={styles.backButtonText}>{'< Back'}</Text>
-        </TouchableOpacity>
         <Logo />
-        <View style={{ width: 60 }} />{/* Spacer to balance the header */}
       </View>
 
       {savedListings.length > 0 ? (
@@ -72,18 +67,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    justifyContent: 'center',
     paddingVertical: 5,
-  },
-  backButton: {
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 18,
-    color: '#007AFF',
   },
   list: {
     paddingHorizontal: 10,
