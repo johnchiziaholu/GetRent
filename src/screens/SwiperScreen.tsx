@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import ListingCard from '../components/ListingCard';
 import Logo from '../components/Logo';
@@ -16,12 +17,13 @@ interface Listing {
 // Define the props for the screen, including navigation and state logic
 interface SwiperScreenProps {
   addSavedListing: (listing: Listing) => void;
+  listings: Listing[];
 }
 
 export const DUMMY_LISTINGS: Listing[] = [
   {
     id: '1',
-    imageUri: 'https://via.placeholder.com/300x400?text=Listing+1',
+    imageUri: 'https://static.vecteezy.com/system/resources/previews/022/456/153/large_2x/beautiful-and-elegant-interior-of-a-modern-and-cozy-apartment-photo.jpg',
     rent: 1200,
     size: 75,
     city: 'Berlin',
@@ -29,7 +31,7 @@ export const DUMMY_LISTINGS: Listing[] = [
   },
   {
     id: '2',
-    imageUri: 'https://via.placeholder.com/300x400?text=Listing+2',
+    imageUri: 'https://img.freepik.com/free-photo/elegant-apartment-with-modern-interior-design-featuring-plush-sofa-curved-coffee-table-generated-by-ai_188544-24534.jpg',
     rent: 1500,
     size: 90,
     city: 'Munich',
@@ -37,7 +39,7 @@ export const DUMMY_LISTINGS: Listing[] = [
   },
   {
     id: '3',
-    imageUri: 'https://via.placeholder.com/300x400?text=Listing+3',
+    imageUri: 'https://static.vecteezy.com/system/resources/previews/022/456/153/large_2x/beautiful-and-elegant-interior-of-a-modern-and-cozy-apartment-photo.jpg',
     rent: 950,
     size: 60,
     city: 'Hamburg',
@@ -45,7 +47,7 @@ export const DUMMY_LISTINGS: Listing[] = [
   },
   {
     id: '4',
-    imageUri: 'https://via.placeholder.com/300x400?text=Listing+4',
+    imageUri: 'https://img.freepik.com/free-photo/elegant-apartment-with-modern-interior-design-featuring-plush-sofa-curved-coffee-table-generated-by-ai_188544-24534.jpg',
     rent: 1800,
     size: 110,
     city: 'Frankfurt',
@@ -55,8 +57,9 @@ export const DUMMY_LISTINGS: Listing[] = [
 
 const SwiperScreen: React.FC<SwiperScreenProps> = ({
   addSavedListing,
+  listings: initialListings,
 }) => {
-  const [listings, setListings] = useState<Listing[]>(DUMMY_LISTINGS);
+  const [listings, setListings] = useState<Listing[]>(initialListings);
 
   const onSwipedRight = (cardIndex: number) => {
     const swipedListing = listings[cardIndex];

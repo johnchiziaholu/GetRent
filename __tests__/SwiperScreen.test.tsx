@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import SwiperScreen from '../src/screens/SwiperScreen';
+import SwiperScreen, { DUMMY_LISTINGS } from '../src/screens/SwiperScreen';
 
 // Mock child components to isolate the SwiperScreen test
 jest.mock('../src/components/ListingCard', () => 'ListingCard');
@@ -12,6 +12,7 @@ describe('SwiperScreen', () => {
 
   const defaultProps = {
     addSavedListing: mockAddSavedListing,
+    listings: DUMMY_LISTINGS,
   };
 
   it('renders correctly when there are listings', () => {
@@ -22,17 +23,12 @@ describe('SwiperScreen', () => {
   });
 
   it('shows the "no more listings" message when the listings are empty', () => {
-    // To test the empty state, we can mock the useState hook
-    const ReactActual = jest.requireActual('react');
-    jest.spyOn(ReactActual, 'useState').mockImplementation(() => [[], jest.fn()]);
-
-    const { getByText } = render(<SwiperScreen {...defaultProps} />);
+    const { getByText } = render(
+      <SwiperScreen {...defaultProps} listings={[]} />
+    );
 
     expect(
       getByText('No more listings for now, check back later!')
     ).toBeTruthy();
-
-    // Clean up the mock
-    jest.restoreAllMocks();
   });
 });
