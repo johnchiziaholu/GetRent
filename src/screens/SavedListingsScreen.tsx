@@ -5,9 +5,11 @@ import {
   View,
   FlatList,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
 import ListingCard from '../components/ListingCard';
 import Logo from '../components/Logo';
+import { useAuth } from '../context/AuthContext';
 
 // Define the Listing type matching SwiperScreen
 interface Listing {
@@ -33,11 +35,16 @@ const SavedListingsScreen: React.FC<SavedListingsScreenProps> = ({
   route,
 }) => {
   const { savedListings } = route.params;
+  const { logout } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.headerSpacer} />
         <Logo />
+        <TouchableOpacity onPress={logout} style={styles.logoutButton}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
 
       {savedListings.length > 0 ? (
@@ -66,9 +73,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   header: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
     paddingVertical: 5,
+  },
+  headerSpacer: {
+    width: 60, // To balance the logout button
+  },
+  logoutButton: {
+    padding: 10,
+  },
+  logoutButtonText: {
+    fontSize: 16,
+    color: '#007AFF',
   },
   list: {
     paddingHorizontal: 10,
